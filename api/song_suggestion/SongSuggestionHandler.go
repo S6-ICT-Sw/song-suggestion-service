@@ -5,8 +5,6 @@ import (
 	"encoding/json"
 	"net/http"
 
-	//"github.com/gorilla/mux"
-
 	"song-suggestion-service/models"
 	"song-suggestion-service/services"
 )

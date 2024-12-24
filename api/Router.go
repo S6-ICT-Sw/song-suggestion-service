@@ -1,13 +1,22 @@
 package api
 
-import(
-	"song-suggestion-service/api/song_suggestion"
+import (
+	songsuggestion "song-suggestion-service/api/song_suggestion"
 
 	"github.com/gorilla/mux"
 )
 
-func SetupRouter() *mux.Router {
-	router := mux.NewRouter()
+type Router struct {
+	Handler *songsuggestion.SongSuggestionHandler
+}
 
-	router.HandleFunc("/suggestions", SongSuggestionHandler.)
+func NewRouter(handler *songsuggestion.SongSuggestionHandler) *Router {
+	return &Router{
+		Handler: handler,
+	}
+}
+
+func (sr *Router) RegisterRoutes(r *mux.Router) {
+	r.HandleFunc("/suggestions", sr.Handler.CreateSongSuggestion).Methods("POST")
+	//r.HandleFunc("/suggestions/{id}", sr.Handler.GetSongSuggestionByID).Methods("GET")
 }

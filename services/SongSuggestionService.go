@@ -9,10 +9,10 @@ import (
 )
 
 type SongSuggestionService struct {
-	repo repository.SongSuggestionRepository // Dependency injection of repository
+	repo *repository.SongSuggestionRepository // Dependency injection of repository
 }
 
-func NewSongSuggestionService(repo repository.SongSuggestionRepository) *SongSuggestionService {
+func NewSongSuggestionService(repo *repository.SongSuggestionRepository) *SongSuggestionService {
 	return &SongSuggestionService{repo: repo}
 }
 
