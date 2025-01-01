@@ -24,7 +24,7 @@ func main() {
 	defer client.Disconnect(context.Background())
 
 	// Initialize repository, service, and handler
-	collection := client.Database("suggestions").Collection("song_suggestions")
+	collection := client.Database("suggestionDB").Collection("song_suggestions")
 	repo := repository.NewSongSuggestionRepository(collection)
 	svc := services.NewSongSuggestionService(repo)
 	h := songsuggestion.NewSongSuggestionHandler(svc)
@@ -37,6 +37,6 @@ func main() {
 	sr.RegisterRoutes(r)
 
 	// Start the HTTP server
-	log.Println("Server is running on port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", r))
+	log.Println("Server is running on port 8081...")
+	log.Fatal(http.ListenAndServe(":8081", r))
 }
