@@ -28,3 +28,19 @@ func (s *SongSuggestionService) CreateSuggestion(ctx context.Context, suggestion
 	}
 	return id, nil
 }
+
+func (s *SongSuggestionService) DeleteSuggestionByID(ctx context.Context, id string) error {
+	return s.repo.DeleteBySongID(ctx, id)
+}
+
+func (s *SongSuggestionService) UpdateSongSuggestionsBySongID(ctx context.Context, songID string, editSong *models.EditSongSuggestion) error {
+	if songID == "" {
+		return errors.New("song ID cannot be empty")
+	}
+
+	return s.repo.UpdateBySongID(ctx, songID, editSong)
+}
+
+func (s *SongSuggestionService) GetTopArtistsByName(ctx context.Context, artistName string) ([]models.SongSuggestion, error) {
+	return s.repo.GetTopArtistsByName(ctx, artistName)
+}
