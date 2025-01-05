@@ -22,12 +22,15 @@ import (
 )
 
 func main() {
+	log.Println("Starting application...")
+
 	// Connect to MongoDB (update the URI as necessary)
 	client, err := mongo.Connect(context.Background(), options.Client().ApplyURI("mongodb+srv://song-snippets-admin:DQv4P9LXNBQ2xsdb@songsnippets.ci2mt.mongodb.net/?retryWrites=true&w=majority&appName=SongSnippets"))
 	if err != nil {
 		log.Fatalf("Failed to connect to MongoDB: %v", err)
 	}
 	defer client.Disconnect(context.Background())
+	log.Println("MongoDB connected successfully")
 
 	// Initialize repository, service, and handler
 	collection := client.Database("suggestionDB").Collection("song_suggestions")
@@ -41,6 +44,7 @@ func main() {
 		log.Fatalf("Failed to initialize RabbitMQ: %v", err)
 	}
 	defer rmq.Close()
+	log.Println("RabbitMQ initialized successfully")
 
 	// Start the consumer in the handler
 	go h.StartConsumer(rmq)
@@ -56,6 +60,11 @@ func main() {
 	server := &http.Server{
 		Addr:    ":8081",
 		Handler: r,
+	}
+
+	log.Println("Starting HTTP server on :8081...")
+	if err := server.ListenAndServe(); err != nil {
+		log.Fatalf("HTTP server failed: %v", err)
 	}
 
 	stop := make(chan os.Signal, 1)
@@ -74,6 +83,5 @@ func main() {
 		log.Fatalf("Server Shutdown failed: %v", err)
 	}
 
-	// Ensure the RabbitMQ connection is properly closed
-	log.Println("Server stopped, RabbitMQ connection closed.")
+	log.Println("Server stopped successfully.")
 }

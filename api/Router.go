@@ -20,5 +20,5 @@ func (sr *Router) RegisterRoutes(r *mux.Router) {
 	r.HandleFunc("/suggestions", sr.Handler.CreateSongSuggestion).Methods("POST")
 	r.HandleFunc("/suggestions/{id}", sr.Handler.DeleteSongSuggestion).Methods("DELETE")
 	r.HandleFunc("/song-suggestions/{id}", sr.Handler.UpdateSongSuggestionsBySongID).Methods("PUT")
-	r.HandleFunc("/song-suggestions/artists", sr.Handler.GetTopArtistsByName).Methods("GET")
+	r.HandleFunc("/suggestions/artists", sr.Handler.GetTopArtistsByName).Methods("GET") // /song-suggestions/artists
 }

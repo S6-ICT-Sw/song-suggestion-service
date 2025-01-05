@@ -14,7 +14,7 @@ type RabbitMQ struct {
 }
 
 func InitRabbitMQ(queueName string) (*RabbitMQ, error) {
-	conn, err := amqp091.Dial("amqp://guest:guest@localhost:5672/")
+	conn, err := amqp091.Dial("amqp://user:password@rabbitmq:5672/") // "amqp://user:password@rabbitmq:5672/"
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to RabbitMQ: %w", err)
 	}
